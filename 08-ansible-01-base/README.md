@@ -10,7 +10,7 @@
 
 ![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/08-ansible-01-base/Screen/Image001.png)
 
-2. Файл с переменными (group_vars), в котором задаётся найденное в первом пункте значение: **\playbook\group_vars\all\examp.yml**
+2. Файл с переменными (group_vars), в котором задаётся найденное в первом пункте значение: **group_vars/all/examp.yml**
 
 Проведена замена на **all default fact**
 
