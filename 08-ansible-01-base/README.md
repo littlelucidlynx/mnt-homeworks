@@ -4,13 +4,9 @@
 
 ![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/08-ansible-01-base/Screen/Image000.png)
 
-1. Установите Ansible версии 2.10 или выше.
-2. Создайте свой публичный репозиторий на GitHub с произвольным именем.
-3. Скачайте [Playbook](./playbook/) из репозитория с домашним заданием и перенесите его в свой репозиторий.
-
 ## Основная часть
 
-1. Запуск из окружения test: ```ansible-playbook -i inventory/test.yml site.yml```
+1. Запуск из окружения **test**: ```ansible-playbook -i inventory/test.yml site.yml```
 
 ![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/08-ansible-01-base/Screen/Image001.png)
 
@@ -26,7 +22,7 @@
 
 ![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/08-ansible-01-base/Screen/Image002.png)
 
-3. Мы же умеем пользоваться docker compose, с его помощью можно подготовить тестовое окружение с образами centos и ubuntu. Для ansible нужен интерпретатор python, которого нет в стандартном образе ubuntu. Нужно собрать свой образ и установить python3 в non-interactive режиме. Соответственно, в проекте появляются новые файлы: compose.yaml для инфраструктуры и Dockerfile для сборки образа.
+3. Мы же умеем пользоваться docker compose, с его помощью можно подготовить тестовое окружение с образами centos и ubuntu. Для ansible нужен интерпретатор python, которого нет в стандартном образе ubuntu. Нужно собрать свой образ и установить python3 в noninteractive режиме. Соответственно, в проекте появляются новые файлы: compose.yaml для инфраструктуры и Dockerfile для сборки образа
 
 4. Запуск playbook из окружения **prod**:
 
@@ -36,8 +32,29 @@ ansible-playbook -i inventory/prod.yml site.yml
 
 ![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/08-ansible-01-base/Screen/Image003.png)
 
-5. Добавьте факты в `group_vars` каждой из групп хостов так, чтобы для `some_fact` получились значения: для `deb` — `deb default fact`, для `el` — `el default fact`.
-6.  Повторите запуск playbook на окружении `prod.yml`. Убедитесь, что выдаются корректные значения для всех хостов.
+5. Замена в **group_vars/el/examp.yml**
+
+```
+---
+#  some_fact: "el"
+  some_fact: "el default fact"---
+```
+
+Замена в **group_vars/deb/examp.yml**
+
+```
+#  some_fact: "deb"
+  some_fact: "deb default fact"
+```
+
+6. Повторный запуск playbook из окружения **prod**:
+
+```
+ansible-playbook -i inventory/prod.yml site.yml
+```
+
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/08-ansible-01-base/Screen/Image004.png)
+
 7. При помощи `ansible-vault` зашифруйте факты в `group_vars/deb` и `group_vars/el` с паролем `netology`.
 8. Запустите playbook на окружении `prod.yml`. При запуске `ansible` должен запросить у вас пароль. Убедитесь в работоспособности.
 9. Посмотрите при помощи `ansible-doc` список плагинов для подключения. Выберите подходящий для работы на `control node`.
