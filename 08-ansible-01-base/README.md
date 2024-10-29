@@ -10,23 +10,26 @@
 
 ## Основная часть
 
-1. 'ansible-playbook -i inventory/test.yml site.yml'
+1. Запуск из окружения test: ```ansible-playbook -i inventory/test.yml site.yml```
 
 ![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/08-ansible-01-base/Screen/Image001.png)
 
-2. Файл с переменными (group_vars), в котором задаётся найденное в первом пункте значение 'group_vars\all\examp.yml'
+2. Файл с переменными (group_vars), в котором задаётся найденное в первом пункте значение: **'group_vars\all\examp.yml**
 
-Проведена замена
+Проведена замена на `all default fact`
 
 ```
 ---
 #  some_fact: 12
   some_fact: all default fact
 ```
+3. Мы же умеем пользоваться docker compose, с его помощью можно подготовить тестовое окружение. Для ansible нужен интерпретатор python, которого нет в стандартном образе ubuntu. Нужно собрать свой свой образ и установить python3 в non-interactive режиме. Соответственно, в проекте появляются новый файлы compose.yaml для инфраструктуры и Dockerfile для сборки образа.
 
- Найдите , и поменяйте его на `all default fact`.
-3. Воспользуйтесь подготовленным (используется `docker`) или создайте собственное окружение для проведения дальнейших испытаний.
-4. Проведите запуск playbook на окружении из `prod.yml`. Зафиксируйте полученные значения `some_fact` для каждого из `managed host`.
+4. Запуск playbook из окружения prod:
+
+```
+ansible-playbook -i inventory/prod.yml site.yml
+```
 
 ![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/08-ansible-01-base/Screen/Image002.png)
 
