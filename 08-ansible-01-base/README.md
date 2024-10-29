@@ -41,6 +41,7 @@ ansible-playbook -i inventory/prod.yml site.yml
 ```
 
 ```
+---
 #  some_fact: "deb"
   some_fact: "deb default fact"
 ```
@@ -69,25 +70,23 @@ ansible-playbook -i inventory/prod.yml site.yml --ask-vault-pass
 
 ![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/08-ansible-01-base/Screen/Image007.png)
 
-9. Посмотрите при помощи `ansible-doc` список плагинов для подключения. Выберите подходящий для работы на `control node`.
-10. В `prod.yml` добавьте новую группу хостов с именем  `local`, в ней разместите localhost с необходимым типом подключения.
-11. Запустите playbook на окружении `prod.yml`. При запуске `ansible` должен запросить у вас пароль. Убедитесь, что факты `some_fact` для каждого из хостов определены из верных `group_vars`.
-12. Заполните `README.md` ответами на вопросы. Сделайте `git push` в ветку `master`. В ответе отправьте ссылку на ваш открытый репозиторий с изменённым `playbook` и заполненным `README.md`.
-13. Предоставьте скриншоты результатов запуска команд.
+9. Запуск `ansible-doc` с ключом `-t connection` (определение типа плагинов из доступных ‘become’, ‘cache’, ‘callback’, ‘cliconf’, ‘connection’, ‘httpapi’, ‘inventory’, ‘lookup’, ‘netconf’, ‘shell’, ‘vars’, ‘module’, ‘strategy’, ‘test’, ‘filter’, ‘role’, ‘keyword’) и grep по слову control
 
-## Необязательная часть
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/08-ansible-01-base/Screen/Image008.png)
 
-1. При помощи `ansible-vault` расшифруйте все зашифрованные файлы с переменными.
-2. Зашифруйте отдельное значение `PaSSw0rd` для переменной `some_fact` паролем `netology`. Добавьте полученное значение в `group_vars/all/exmp.yml`.
-3. Запустите `playbook`, убедитесь, что для нужных хостов применился новый `fact`.
-4. Добавьте новую группу хостов `fedora`, самостоятельно придумайте для неё переменную. В качестве образа можно использовать [этот вариант](https://hub.docker.com/r/pycontribs/fedora).
-5. Напишите скрипт на bash: автоматизируйте поднятие необходимых контейнеров, запуск ansible-playbook и остановку контейнеров.
-6. Все изменения должны быть зафиксированы и отправлены в ваш личный репозиторий.
+10. В `prod.yml` добавлена новая группа хостов с именем `local` с localhost
 
----
+```
+  local:
+    hosts:
+      localhost:
+        ansible_host: localhost
+        ansible_connection: local
+```
 
-### Как оформить решение задания
+11. Повторный запуск с зашифрованными файлами, запросом пароля и добавленным localhost
 
-Выполненное домашнее задание пришлите в виде ссылки на .md-файл в вашем репозитории.
-
----
+```
+ansible-playbook -i inventory/prod.yml site.yml --ask-vault-pass
+```
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/08-ansible-01-base/Screen/Image009.png)
