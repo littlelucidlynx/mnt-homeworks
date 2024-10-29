@@ -2,7 +2,7 @@
 
 ## Подготовка к выполнению
 
-![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/tree/MNT-video/08-ansible-01-base/Screen/Image000.png)
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/08-ansible-01-base/Screen/Image000.png)
 
 1. Установите Ansible версии 2.10 или выше.
 2. Создайте свой публичный репозиторий на GitHub с произвольным именем.
@@ -10,17 +10,25 @@
 
 ## Основная часть
 
-1. Попробуйте запустить playbook на окружении из `test.yml`, зафиксируйте значение, которое имеет факт `some_fact` для указанного хоста при выполнении playbook.
-```
-ansible-playbook -i inventory/test.yml site.yml
-```
-![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/tree/MNT-video/08-ansible-01-base/Screen/Image001.png)
+1. 'ansible-playbook -i inventory/test.yml site.yml'
 
-2. 'group_vars\all\examp.yml' Найдите файл с переменными (group_vars), в котором задаётся найденное в первом пункте значение, и поменяйте его на `all default fact`.
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/08-ansible-01-base/Screen/Image001.png)
+
+2. Файл с переменными (group_vars), в котором задаётся найденное в первом пункте значение 'group_vars\all\examp.yml'
+
+Проведена замена
+
+```
+---
+#  some_fact: 12
+  some_fact: all default fact
+```
+
+ Найдите , и поменяйте его на `all default fact`.
 3. Воспользуйтесь подготовленным (используется `docker`) или создайте собственное окружение для проведения дальнейших испытаний.
 4. Проведите запуск playbook на окружении из `prod.yml`. Зафиксируйте полученные значения `some_fact` для каждого из `managed host`.
 
-![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/tree/MNT-video/08-ansible-01-base/Screen/Image002.png)
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/08-ansible-01-base/Screen/Image002.png)
 
 5. Добавьте факты в `group_vars` каждой из групп хостов так, чтобы для `some_fact` получились значения: для `deb` — `deb default fact`, для `el` — `el default fact`.
 6.  Повторите запуск playbook на окружении `prod.yml`. Убедитесь, что выдаются корректные значения для всех хостов.
