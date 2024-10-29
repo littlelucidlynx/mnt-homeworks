@@ -14,24 +14,27 @@
 
 ![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/08-ansible-01-base/Screen/Image001.png)
 
-2. Файл с переменными (group_vars), в котором задаётся найденное в первом пункте значение: **'group_vars\all\examp.yml**
+2. Файл с переменными (group_vars), в котором задаётся найденное в первом пункте значение: **\playbook\group_vars\all\examp.yml**
 
-Проведена замена на `all default fact`
+Проведена замена на **all default fact**
 
 ```
 ---
 #  some_fact: 12
   some_fact: all default fact
 ```
-3. Мы же умеем пользоваться docker compose, с его помощью можно подготовить тестовое окружение. Для ansible нужен интерпретатор python, которого нет в стандартном образе ubuntu. Нужно собрать свой свой образ и установить python3 в non-interactive режиме. Соответственно, в проекте появляются новый файлы compose.yaml для инфраструктуры и Dockerfile для сборки образа.
 
-4. Запуск playbook из окружения prod:
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/08-ansible-01-base/Screen/Image002.png)
+
+3. Мы же умеем пользоваться docker compose, с его помощью можно подготовить тестовое окружение с образами centos и ubuntu. Для ansible нужен интерпретатор python, которого нет в стандартном образе ubuntu. Нужно собрать свой образ и установить python3 в non-interactive режиме. Соответственно, в проекте появляются новые файлы: compose.yaml для инфраструктуры и Dockerfile для сборки образа.
+
+4. Запуск playbook из окружения **prod**:
 
 ```
 ansible-playbook -i inventory/prod.yml site.yml
 ```
 
-![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/08-ansible-01-base/Screen/Image002.png)
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/08-ansible-01-base/Screen/Image003.png)
 
 5. Добавьте факты в `group_vars` каждой из групп хостов так, чтобы для `some_fact` получились значения: для `deb` — `deb default fact`, для `el` — `el default fact`.
 6.  Повторите запуск playbook на окружении `prod.yml`. Убедитесь, что выдаются корректные значения для всех хостов.
