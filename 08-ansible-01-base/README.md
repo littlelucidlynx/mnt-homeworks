@@ -70,7 +70,7 @@ ansible-playbook -i inventory/prod.yml site.yml --ask-vault-pass
 
 ![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/08-ansible-01-base/Screen/Image007.png)
 
-9. Запуск `ansible-doc` с ключом `-t connection` (определение типа плагинов из доступных ‘become’, ‘cache’, ‘callback’, ‘cliconf’, ‘connection’, ‘httpapi’, ‘inventory’, ‘lookup’, ‘netconf’, ‘shell’, ‘vars’, ‘module’, ‘strategy’, ‘test’, ‘filter’, ‘role’, ‘keyword’) и grep по слову control
+9. Запуск `ansible-doc` с ключом `-t connection` (определение типа плагинов из доступных `become`, `cache`, `callback`, `cliconf`, `connection`, `httpapi`, `inventory`, `lookup`, `netconf`, `shell`, `vars`, `module`, `strategy`, `test`, `filter`, `role`, `keyword`), вывод списом `-l` и grep по слову control
 
 ![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/08-ansible-01-base/Screen/Image008.png)
 
