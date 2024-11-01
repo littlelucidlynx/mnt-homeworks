@@ -1,4 +1,4 @@
-# site.yml Playbook
+# Описание site.yml playbook
 
 Плейбук описывает развертывание `clickhouse` и `vector` на хосты, указанные в `inventory`
 
