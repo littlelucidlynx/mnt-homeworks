@@ -6,10 +6,10 @@
 - [group_vars vector](#group_vars_vector)
 - [Inventory](#inventory)
 - [Playbook](#playbook)
-  - [Play "Install Clickhouse"](#play_install_clickhouse")
-  - [Tasks Play "Install Clickhouse"](#tasks_play_install_clickhouse")
-  - [Play "Install Vector"](#play_install_vector")
-  - [Tasks Play "Install Vector"](#tasks_play_install_vector")
+  - [Play "Install Clickhouse"](#play_install_clickhouse)
+  - [Tasks Play "Install Clickhouse"](#tasks_play_install_clickhouse)
+  - [Play "Install Vector"](#play_install_vector)
+  - [Tasks Play "Install Vector"](#tasks_play_install_vector)
 - [Template](#template)
 
 ## group_vars_clickhouse
@@ -19,7 +19,7 @@
 | `clickhouse_version` | версия `clickhouse` |
 | `clickhouse_packages` | имена пакетов для скачивания и установки |
 
-## group_vars vector
+## group_vars_vector
 
 | Переменная  | Назначение  |
 |:---|:---|
