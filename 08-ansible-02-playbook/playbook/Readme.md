@@ -38,7 +38,7 @@
 
 Playbook состоит из 2 `play`
 
-### Play "Install Clickhouse"
+### Play Install Clickhouse
 
 Применяется на группу хостов "clickhouse", тэгируется "clickhouse" и предназначен для установки и запуска `clickhouse`
 
