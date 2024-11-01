@@ -83,7 +83,7 @@
         validate: vector validate --no-environment --config-yaml %s
       tags:
         - vector
-    - name: Vector | change systemd unit
+    - name: Vector | Change systemd unit
       ansible.builtin.template:
         src: ./templates/vector.service.j2
         dest: /usr/lib/systemd/system/vector.service
