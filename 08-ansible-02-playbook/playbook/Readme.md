@@ -6,7 +6,7 @@
 - [group_vars vector](#group_vars_vector)
 - [Inventory](#inventory)
 - [Playbook](#playbook)
-  - [Play "Install Clickhouse"](#play_install_clickhouse)
+  - [Play Install Clickhouse](#play_install_clickhouse)
   - [Tasks Play "Install Clickhouse"](#tasks_play_install_clickhouse)
   - [Play "Install Vector"](#play_install_vector)
   - [Tasks Play "Install Vector"](#tasks_play_install_vector)
