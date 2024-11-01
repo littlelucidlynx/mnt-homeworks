@@ -1,6 +1,18 @@
+# site.yml Playbook»
+
 Плейбук описывает развертывание `clickhouse` и `vector` на хосты, указанные в `inventory`
 
-## group_vars clickhouse
+- [group_vars clickhouse](#group_vars_clickhouse)
+- [group_vars vector](#group_vars_vector)
+- [Inventory](#inventory)
+- [Playbook](#playbook)
+  - [Play "Install Clickhouse"](#play_install_clickhouse")
+  - [Tasks Play "Install Clickhouse"](#tasks_play_install_clickhouse")
+  - [Play "Install Vector"](#play_install_vector")
+  - [Tasks Play "Install Vector"](#tasks_play_install_vector")
+- [Template](#template)
+
+## group_vars_clickhouse
 
 | Переменная  | Назначение  |
 |:---|:---|
@@ -16,7 +28,7 @@
 | `vector_config_dir` | каталог для конфига `vector` |
 | `vector_config` | конфиг файл `vector` |
 
-## Inventory файл
+## Inventory
 
 Группа "clickhouse" состоит из 1 хоста `clickhouse-01` и тип коннектора `docker`
 
@@ -24,9 +36,11 @@
 
 ## Playbook
 
-Playbook состоит из 2 `play`.
+Playbook состоит из 2 `play`
 
-Play "Install Clickhouse" применяется на группу хостов "clickhouse", тэгируется "clickhouse" и предназначен для установки и запуска `clickhouse`
+### Play "Install Clickhouse"
+
+Применяется на группу хостов "clickhouse", тэгируется "clickhouse" и предназначен для установки и запуска `clickhouse`
 
 Обработчик (handler) для запуска `clickhouse-server`, таски обращаются к нему через ключ **notify: Start clickhouse service**
 ```yaml
@@ -38,6 +52,8 @@ Play "Install Clickhouse" применяется на группу хостов 
         state: restarted
 ```
 
+### Tasks Play "Install Clickhouse"
+
 | Имя таска | Описание |
 |--------------|---------|
 | `Clickhouse \| Download` | Скачивание пакетов. Используется цикл с перменными `clickhouse_packages`. Так как не у всех пакетов есть `noarch` версии, используем перехват ошибки `rescue` |
@@ -45,7 +61,9 @@ Play "Install Clickhouse" применяется на группу хостов 
 | `Clickhouse \| Flush handlers` | Принудительное выполнение handler `Start clickhouse service` |
 | `Clickhouse \| Create database` | Создание БД с названием **logs** и указание условий изменения состояния таска |
 
-Play "Install Vector" применяется на группу хостов "vector", тэгируется "vector" и предназначен для установки, конфигурирования и запуска `vector`
+### Play "Install Vector"
+
+Применяется на группу хостов "vector", тэгируется "vector" и предназначен для установки, конфигурирования и запуска `vector`
 
 Обработчик (handler) для запуска `vector`, таски обращаются к нему через ключ **notify: Start Vector service**
 ```yaml
@@ -58,6 +76,8 @@ Play "Install Vector" применяется на группу хостов "vec
         name: vector
         state: restarted
 ```
+
+### Tasks Play "Install Vector"
 
 | Имя таска | Описание |
 |--------------|---------|

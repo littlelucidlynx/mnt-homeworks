@@ -45,7 +45,7 @@ vector:
 
 ![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/08-ansible-02-playbook/Screen/Image002.png)
 
-6. При запуске с флагом `--check` возникает ошибка в таске установки clickhouse, поскольку `--check` только проверку, но не сами действия. Соответственно, он не скачивает дистрибутив в предыдущем таске
+6. При запуске с флагом `--check` возникает ошибка в таске установки clickhouse, поскольку `--check` выполняет только проверку, но не сами действия. Соответственно, он не скачивает дистрибутив в предыдущем таске
 
 ![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/08-ansible-02-playbook/Screen/Image003.png)
 
@@ -55,15 +55,7 @@ vector:
 
 8. Повторный запуск playbook с флагом `--diff`  — изменений нет, playbook идемпотентен
 
-![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/08-ansible-02-playbook/Screen/Image004.png)
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/08-ansible-02-playbook/Screen/Image005.png)
 
-9. Подготовьте README.md-файл по своему playbook. В нём должно быть описано: что делает playbook, какие у него есть параметры и теги. Пример качественной документации ansible playbook по [ссылке](https://github.com/opensearch-project/ansible-playbook). Так же приложите скриншоты выполнения заданий №5-8
-10. Готовый playbook выложите в свой репозиторий, поставьте тег `08-ansible-02-playbook` на фиксирующий коммит, в ответ предоставьте ссылку на него.
-
----
-
-### Как оформить решение задания
-
-Выполненное домашнее задание пришлите в виде ссылки на .md-файл в вашем репозитории.
-
----
+9. Подготовьте [Readme.md](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/08-ansible-02-playbook/playbook/Readme.md)
+10. Готовый playbook выложите в свой репозиторий, поставьте тег `08-ansible-02-playbook` на фиксирующий коммит, в ответ предоставьте ссылку на него
