@@ -6,7 +6,7 @@
 - [group_vars vector](#group_vars_vector)
 - [Inventory](#inventory)
 - [Playbook](#playbook)
-  - [Play Install Clickhouse](#play_install_clickhouse)
+  - [Play Install Clickhouse](#play install clickhouse)
   - [Tasks Play "Install Clickhouse"](#tasks_play_install_clickhouse)
   - [Play "Install Vector"](#play_install_vector)
   - [Tasks Play "Install Vector"](#tasks_play_install_vector)
@@ -38,7 +38,7 @@
 
 Playbook состоит из 2 `play`
 
-### play_install_clickhouse
+### play install clickhouse
 
 Применяется на группу хостов "clickhouse", тэгируется "clickhouse" и предназначен для установки и запуска `clickhouse`
 
