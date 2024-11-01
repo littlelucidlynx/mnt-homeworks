@@ -57,5 +57,4 @@ vector:
 
 ![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/08-ansible-02-playbook/Screen/Image005.png)
 
-9. Подготовьте [Readme.md](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/08-ansible-02-playbook/playbook/Readme.md)
-10. Готовый playbook выложите в свой репозиторий, поставьте тег `08-ansible-02-playbook` на фиксирующий коммит, в ответ предоставьте ссылку на него
+9. Ссылка на [Readme.md](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/08-ansible-02-playbook/playbook/Readme.md) с описанием Playbook
