@@ -23,8 +23,8 @@ vector:
 
 ## Основная часть
 
-1. Подготовлен inventory-файл `prod.yml` с добавлением хостов для vector. Развертывание все так же через docker compose, образ `pycontribs/centos:7`
-2. Создан play `Install vector` для хостов vector из inventory. Таски обозначены тэгом vector. Шаблон честно взят из интернета чисто для проверки `ansible.builtin.template`
+1. Подготовлен inventory-файл `prod.yml` с добавлением хостов для `vector`. Развертывание все так же через `docker compose`, образ `pycontribs/centos:7`
+2. Создан play `Install vector` для хостов `vector` из `inventory`. Таски обозначены тэгом `vector`. Шаблон честно взят из интернета чисто для проверки `ansible.builtin.template`
 3. Можно пойти по пути наименьшего сопротивления и взять сразу установочный пакет rpm для vector через `get_url`
 4. После установки vector добавил паузу в 10 секунд, чтобы vector успел отметиться в systemctl
 5. Запуск `ansible-lint site.yml`
