@@ -53,7 +53,7 @@ vector:
 
 ![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/08-ansible-02-playbook/Screen/Image004.png)
 
-8. Повторный запуск playbook с флагом `--diff`  — изменений нет, playbook идемпотентен
+8. Повторный запуск playbook с флагом `--diff` — изменений нет, playbook идемпотентен
 
 ![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/08-ansible-02-playbook/Screen/Image005.png)
 
