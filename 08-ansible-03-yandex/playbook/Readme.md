@@ -1,6 +1,6 @@
 # Описание site.yml playbook
 
-Плейбук описывает развертывание `clickhouse` и `vector` на хосты, указанные в `inventory`
+Плейбук описывает развертывание `clickhouse`, `vector` и `lighthouse` на хосты, указанные в `inventory`
 
 - [group_vars clickhouse](#group_vars_clickhouse)
 - [group_vars vector](#group_vars_vector)
@@ -36,8 +36,8 @@
 |:---|:---|
 | `lighthouse_vcs` | URL-адрес дистрибутива `lighthouse` |
 | `lighthouse_location_dir` | каталог для `lighthouse` |
-| `lighthouse_access_log_name` | имя файло логов |
-| `nginx_user_name` | имя пользователя nginx |
+| `lighthouse_access_log_name` | имя файла логов |
+| `nginx_user_name` | имя пользователя `nginx` |
 
 ## Inventory
 
@@ -134,7 +134,7 @@ Playbook состоит из 3 `play`
 ```
 ### tasks_play_install_lighthouse
 
-| Имя pretask | Описание |
+| Имя пре-таска | Описание |
 |--------------|---------|
 | `Lighthouse \| Install dependencies` | Установка `git` |
 | `Lighhouse \| Install epel-release` | Добавление `epel-release` |
