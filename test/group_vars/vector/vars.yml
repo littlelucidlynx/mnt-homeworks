@@ -1,0 +1,24 @@
+---
+vector_version: "0.22.3"
+vector_url: "https://packages.timber.io/vector/{{ vector_version }}/vector-{{ vector_version }}-1.x86_64.rpm"
+vector_config_dir: "/etc/vector"
+data_dir: "/var/lib/vector"
+sources:
+  our_log:
+    type: file
+    include:
+      - "/home/eurus_cloud/logs/*.log"
+    ignore_older: 600
+    read_from: beginning
+sinks:
+  to_clickhouse:
+    inputs:
+      - our_log
+    type: clickhouse
+    database: logs
+    table: my_table
+    endpoints: "http://62.84.118.171:8123"
+    healthcheck: false
+    compression: gzip
+    skip_unknown_fields: true
+    
