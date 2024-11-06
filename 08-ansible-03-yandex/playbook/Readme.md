@@ -28,19 +28,45 @@
 | `vector_config_dir` | каталог для конфига `vector` |
 | `vector_config` | конфиг файл `vector` |
 
+## group_vars_lighthouse
+
+| Переменная  | Назначение  |
+|:---|:---|
+| `lighthouse_vcs` | URL-адрес дистрибутива `lighthouse` |
+| `lighthouse_location_dir` | каталог для `lighthouse` |
+| `lighthouse_access_log_name` | имя файло логов |
+| `nginx_user_name` | имя пользователя nginx |
+
 ## Inventory
 
-Группа "clickhouse" состоит из 1 хоста `clickhouse-01` и тип коннектора `docker`
-
-Группа "vector" состоит из 1 хоста `vector-01` и тип коннектора `docker`
+Формируется при каждом запуске `terraform`, имеет вид
+```
+clickhouse:
+  hosts:
+    clickhouse-01: 
+      ansible_host: 62.84.117.148
+      ansible_user: eurus_cloud
+  
+lighthouse:
+  hosts:
+    lighthouse-01: 
+      ansible_host: 89.169.144.132
+      ansible_user: eurus_cloud
+  
+vector:
+  hosts:
+    vector-01: 
+      ansible_host: 89.169.131.242
+      ansible_user: eurus_cloud
+```
 
 ## Playbook
 
-Playbook состоит из 2 `play`
+Playbook состоит из 3 `play`
 
 ### play_install_clickhouse
 
-Применяется на группу хостов "clickhouse", тэгируется "clickhouse" и предназначен для установки и запуска `clickhouse`
+Применяется на группу хостов "clickhouse", предназначен для установки и запуска `clickhouse`
 
 Обработчик (handler) для запуска `clickhouse-server`, таски обращаются к нему через ключ **notify: Start clickhouse service**
 ```yaml
@@ -58,12 +84,13 @@ Playbook состоит из 2 `play`
 |--------------|---------|
 | `Clickhouse \| Download` | Скачивание пакетов. Используется цикл с перменными `clickhouse_packages`. Так как не у всех пакетов есть `noarch` версии, используем перехват ошибки `rescue` |
 | `Clickhouse \| Install` | Установка пакетов, вызов обработчика `Start clickhouse service` через `notify` |
+| `Clickhouse \| Create clickhouse config` | Применение шаблона конфига `clickhouse` |
 | `Clickhouse \| Flush handlers` | Принудительное выполнение handler `Start clickhouse service` |
 | `Clickhouse \| Create database` | Создание БД с названием **logs** и указание условий изменения состояния таска |
 
 ### play_install_vector
 
-Применяется на группу хостов "vector", тэгируется "vector" и предназначен для установки, конфигурирования и запуска `vector`
+Применяется на группу хостов "vector", предназначен для установки, конфигурирования и запуска `vector`
 
 Обработчик (handler) для запуска `vector`, таски обращаются к нему через ключ **notify: Start Vector service**
 ```yaml

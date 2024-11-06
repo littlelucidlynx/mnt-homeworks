@@ -40,6 +40,11 @@
       notify: Start clickhouse service
     - name: Flush handlers
       ansible.builtin.meta: flush_handlers
+    - name: Clickhouse | Create database
+      ansible.builtin.command: "clickhouse-client -q 'create database logs;'"
+      register: create_db
+      failed_when: create_db.rc != 0 and create_db.rc != 82
+      changed_when: create_db.rc == 0
 - name: Install Vector
   hosts: vector
   tasks:
@@ -60,7 +65,7 @@
         owner: "{{ ansible_user_id }}"
         group: "{{ ansible_user_gid }}"
         validate: vector validate --no-environment --config-yaml %s
-    - name: Vector | Change systed unit
+    - name: Vector | Change systemd unit
       become: true
       ansible.builtin.template:
         src: vector.service.j2
