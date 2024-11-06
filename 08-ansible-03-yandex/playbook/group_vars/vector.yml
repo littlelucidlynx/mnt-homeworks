@@ -13,7 +13,7 @@ vector_config:
       inputs:
         - our_log
       database: custom
-      endpoint: http://62.84.117.148:8123
+      endpoint: http://158.160.36.6:8123
       table: my_table
       compression: gzip
       healthcheck: false

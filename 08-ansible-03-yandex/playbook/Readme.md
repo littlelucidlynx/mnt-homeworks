@@ -10,6 +10,8 @@
   - [Tasks Play "Install Clickhouse"](#tasks_play_install_clickhouse)
   - [Play "Install Vector"](#play_install_vector)
   - [Tasks Play "Install Vector"](#tasks_play_install_vector)
+  - [Play "Install Lighthouse"](#play_install_lighthouse)
+  - [Tasks Play "Install Lighthouse"](#tasks_play_install_lighthouse)  
 - [Template](#template)
 
 ## group_vars_clickhouse
@@ -86,7 +88,6 @@ Playbook состоит из 3 `play`
 | `Clickhouse \| Install` | Установка пакетов, вызов обработчика `Start clickhouse service` через `notify` |
 | `Clickhouse \| Create clickhouse config` | Применение шаблона конфига `clickhouse` |
 | `Clickhouse \| Flush handlers` | Принудительное выполнение handler `Start clickhouse service` |
-| `Clickhouse \| Create database` | Создание БД с названием **logs** и указание условий изменения состояния таска |
 
 ### play_install_vector
 
@@ -95,13 +96,12 @@ Playbook состоит из 3 `play`
 Обработчик (handler) для запуска `vector`, таски обращаются к нему через ключ **notify: Start Vector service**
 ```yaml
   handlers:
-    - name: Start Vector service
+    - name: Start Vector Service
       become: true
-      become_method: su
-      become_user: root
-      ansible.builtin.service:
+      ansible.builtin.systemd:
         name: vector
-        state: restarted
+        state: started
+        daemon_reload: true
 ```
 
 ### tasks_play_install_vector
@@ -112,10 +112,46 @@ Playbook состоит из 3 `play`
 | `Vector \| Install` | Установка пакета |
 | `Vector \| Apply template` | Применение шаблона конфига `vector` и валидация |
 | `Vector \| Change systemd unit` | Изменение модуля службы `vector` |
-| `Vector \| Pause for 10 seconds to create vector service` | Пауза в 10 секунд для обноления systemctl `vector` и вызов обработчика `Start Vector service` через `notify` |
+| `Vector \| Change systemd unit` | Изменение модуля службы `vector` |
+| `Vector \| Pause for 10 seconds` | Пауза в 10 секунд для обноления systemctl `vector` и вызов обработчика `Start Vector Service` через `notify` |
+| `Vector \| Flush handlers` | Принудительное выполнение handler `Start Vector Service` |
+
+
+### play_install_lighthouse
+
+Применяется на группу хостов "lighthouse", предназначен для установки, конфигурирования и запуска `lighthouse`
+
+Обработчики (handler) для запуска и перезапуска `Nginx`, таски обращаются к нему через ключи **notify: Start-nginx** и **notify: Reload-nginx**
+
+```yaml
+ handlers:
+    - name: Start-nginx
+      become: true
+      ansible.builtin.command: nginx
+    - name: Reload-nginx
+      become: true
+      ansible.builtin.command: nginx -s reload
+```
+### tasks_play_install_lighthouse
+
+| Имя pretask | Описание |
+|--------------|---------|
+| `Lighthouse \| Install dependencies` | Установка `git` |
+| `Lighhouse \| Install epel-release` | Добавление `epel-release` |
+| `Lighhouse \| Install nginx` | Установка `Nginx` и вызов обработчика `Start-nginx` через `notify`|
+| `Lighthouse \| Create general config` | Создание конфига `Nginx` и вызов обработчика `Reload-nginx` через `notify` |
+
+| Имя таска | Описание |
+|--------------|---------|
+| `Lighthouse \| Copy from git` | Клонирование репозитория `lighthouse` |
+| `Lighthouse \| Create lighthouse config` | Создание конфига `Nginx` для `lighthouse`. После этого перезапускаем `nginx` и вызов обработчика `Reload-nginx` через `notify`  |
 
 ## Template
 
-Шаблон "vector.service.j2" используется для изменения модуля службы `vector`. В нем определена строка запуска `vector` и пользователь для запуска
+Шаблон "vector.service.j2" используется для изменения модуля службы `vector`. В нем мы определяем строку запуска `vector`. Также указываем, что unit должен быть запущен под текущим пользователем `ansible`
 
-Шаблон "vector.yml.j2" используется для настройки конфига `vector`. Указывает на расположение конфига в переменной "vector_config" и необходимость преобразования в `YAML`
+Шаблон "vector.yml.j2" используется для настройки конфига `vector`. В нем мы указываем, что конфиг файл находится в переменной "vector_config" и его надо преобразовать в `YAML`.
+
+Шаблон "nginx.conf.j2" используется для первичной настройки `nginx`. Мы задаем пользователя для работы `nginx` и удаляем настройки root директории по умолчанию.
+
+Шаблон "lighthouse_nginx.conf.j2" настраивает `nginx` на работу с `lighthouse`. В нем прописываем порт 80, root директорию и index страницу.

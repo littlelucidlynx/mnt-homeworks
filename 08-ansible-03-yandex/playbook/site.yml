@@ -31,6 +31,8 @@
           - clickhouse-client-{{ clickhouse_version }}.rpm
           - clickhouse-server-{{ clickhouse_version }}.rpm
       notify: Start clickhouse service
+    - name: Flush handlers
+      ansible.builtin.meta: flush_handlers
     - name: Clickhouse | Create clickhouse config
       become: true
       ansible.builtin.template:
@@ -38,15 +40,15 @@
         dest: /etc/clickhouse-server/config.xml
         mode: "0644"
       notify: Start clickhouse service
-    - name: Flush handlers
-      ansible.builtin.meta: flush_handlers
-    - name: Clickhouse | Create database
-      ansible.builtin.command: "clickhouse-client -q 'create database logs;'"
-      register: create_db
-      failed_when: create_db.rc != 0 and create_db.rc != 82
-      changed_when: create_db.rc == 0
 - name: Install Vector
   hosts: vector
+  handlers:
+    - name: Start Vector Service
+      become: true
+      ansible.builtin.systemd:
+        name: vector
+        state: started
+        daemon_reload: true
   tasks:
     - name: Vector | Download
       ansible.builtin.get_url:
@@ -73,13 +75,15 @@
         mode: "0644"
         owner: "{{ ansible_user_id }}"
         group: "{{ ansible_user_gid }}"
-    - name: Vector | Start Service
-      become: true
-      ansible.builtin.systemd:
-        name: vector
-        state: started
-        daemon_reload: true
-- name: Install nginx
+    - name: Pause for 10 seconds to create vector service
+      ansible.builtin.pause:
+        seconds: 10
+      notify: Start Vector Service
+      tags:
+        - vector
+    - name: Flush handlers to restart vector
+      ansible.builtin.meta: flush_handlers
+- name: Install lighthouse
   hosts: lighthouse
   handlers:
     - name: Start-nginx
@@ -88,7 +92,12 @@
     - name: Reload-nginx
       become: true
       ansible.builtin.command: nginx -s reload
-  tasks:
+  pre_tasks:
+    - name: Lighthouse | Install dependencies
+      become: true
+      ansible.builtin.yum:
+        name: git
+        state: present
     - name: Nginx | Install epel-release
       become: true
       ansible.builtin.yum:
@@ -107,18 +116,6 @@
         dest: /etc/nginx/nginx.conf
         mode: "0644"
       notify: Reload-nginx
-- name: Install Lighthouse
-  hosts: lighthouse
-  handlers:
-    - name: Reload-nginx
-      become: true
-      ansible.builtin.command: nginx -s reload
-  pre_tasks:
-    - name: Lighthouse | Install dependencies
-      become: true
-      ansible.builtin.yum:
-        name: git
-        state: present
   tasks:
     - name: Lighthouse | Copy from git
       ansible.builtin.git:
