@@ -2,26 +2,59 @@
 
 ## Подготовка к выполнению
 
-1. Подготовьте в Yandex Cloud три хоста: для `clickhouse`, для `vector` и для `lighthouse`.
-2. Репозиторий LightHouse находится [по ссылке](https://github.com/VKCOM/lighthouse).
+1. Версия ansible
+
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/08-ansible-03-yandex/Screen/Image000.png)
+
+2. Версия terraform и yc
+
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/08-ansible-03-yandex/Screen/Image001.png)
 
 ## Основная часть
 
-1. Допишите playbook: нужно сделать ещё один play, который устанавливает и настраивает LightHouse.
-2. При создании tasks рекомендую использовать модули: `get_url`, `template`, `yum`, `apt`.
-3. Tasks должны: скачать статику LightHouse, установить Nginx или любой другой веб-сервер, настроить его конфиг для открытия LightHouse, запустить веб-сервер.
-4. Подготовьте свой inventory-файл `prod.yml`.
-5. Запустите `ansible-lint site.yml` и исправьте ошибки, если они есть.
-6. Попробуйте запустить playbook на этом окружении с флагом `--check`.
-7. Запустите playbook на `prod.yml` окружении с флагом `--diff`. Убедитесь, что изменения на системе произведены.
-8. Повторно запустите playbook с флагом `--diff` и убедитесь, что playbook идемпотентен.
-9. Подготовьте README.md-файл по своему playbook. В нём должно быть описано: что делает playbook, какие у него есть параметры и теги.
-10. Готовый playbook выложите в свой репозиторий, поставьте тег `08-ansible-03-yandex` на фиксирующий коммит, в ответ предоставьте ссылку на него.
+1. centos7 поддерживает vector до версии `0.22.3` включительно. С этой оговоркой можно разворачивать стенд
+2. Виртуальные машины проводятся через terraform, создание группы безопасности для сети взято из предыдущих заданий
+3. Смена имени пользователя по умолчанию, установка ssh-ключа через `cloud-init.yml`. Файл включен в `.gitignore`
+4. inventory-файл `prod.yml` будет формироваться из ресурса **yandex_compute_instance.ansible-instance**
 
----
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/08-ansible-03-yandex/Screen/Image002.png)
 
-### Как оформить решение задания
+5. Запуск `tflint` и `ansible-lint site.yml`
 
-Выполненное домашнее задание пришлите в виде ссылки на .md-файл в вашем репозитории.
+Ошибки terraform:
+- Не объявлены версии провайдеров yandex-cloud/yandex и hashicorp/local
+- Переменные объявлены, но не используются
 
----
+Ошибки ansible:
+- Имя task со строчной буквы
+- Для встроенного модуля использовано короткое имя вместо полного имени коллекции
+- Отсутствует пустая строка в конце файла
+- Указано неявное восьмеричное значение
+- Commands should not change things if nothing needs doing - **игнориуем**
+
+Ошибки исправлены
+
+6.  При запуске с флагом `--check` возникает ошибка в таске установки clickhouse, поскольку `--check` выполняет только проверку, но не сами действия. Соответственно, он не скачивает дистрибутив в предыдущем таске
+
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/08-ansible-03-yandex/Screen/Image008.png)
+
+7. Первый запуск на `prod.yml` окружении с флагом `--diff`
+
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/08-ansible-03-yandex/Screen/Image003.png)
+
+8. Повторный запуск playbook с флагом `--diff` — изменений нет, playbook идемпотентен
+
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/08-ansible-03-yandex/Screen/Image004.png)
+
+9. Результаты
+
+Clickhouse - подключение по ssh и запуск `clickhouse-client -h 127.0.0.1`
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/08-ansible-03-yandex/Screen/Image005.png)
+
+Vector - подключение по ssh, вывод списка файлов и содержимое `vector.yml`
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/08-ansible-03-yandex/Screen/Image006.png)
+
+Lighthouse - http по публичному адресу
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/08-ansible-03-yandex/Screen/Image007.png)
+
+10. Ссылка на [Readme.md](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/08-ansible-03-yandex/playbook/Readme.md) с описанием Playbook
