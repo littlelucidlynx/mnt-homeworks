@@ -1,0 +1,6 @@
+---
+- name: Lighthouse | Install epel-release
+  become: true
+  ansible.builtin.dnf:
+    name: epel-release
+    state: present

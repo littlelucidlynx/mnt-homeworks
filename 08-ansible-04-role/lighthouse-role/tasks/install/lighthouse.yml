@@ -1,0 +1,6 @@
+---
+- name: Lighthouse | Install lighthouse from git
+  ansible.builtin.git:
+    repo: "{{ lighthouse_vcs }}"
+    version: master
+    dest: "{{ lighthouse_location_dir }}"

@@ -1,0 +1,8 @@
+---
+- ansible.builtin.include_tasks: install/git.yml
+- ansible.builtin.include_tasks: install/epel.yml
+- ansible.builtin.include_tasks: install/nginx.yml
+- ansible.builtin.include_tasks: configure/nginx.yml
+
+- ansible.builtin.include_tasks: install/lighthouse.yml
+- ansible.builtin.include_tasks: configure/lighthouse.yml

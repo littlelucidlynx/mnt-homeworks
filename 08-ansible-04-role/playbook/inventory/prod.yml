@@ -1,0 +1,17 @@
+clickhouse:
+  hosts:
+    clickhouse-01:
+      ansible_host: 62.84.118.135
+      ansible_user: eurus_cloud
+
+lighthouse:
+  hosts:
+    lighthouse-01:
+      ansible_host: 130.193.48.64
+      ansible_user: eurus_cloud
+
+vector:
+  hosts:
+    vector-01:
+      ansible_host: 158.160.40.150
+      ansible_user: eurus_cloud
