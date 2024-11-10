@@ -2,45 +2,95 @@
 
 ## Подготовка к выполнению
 
-1. * Необязательно. Познакомьтесь с [LightHouse](https://youtu.be/ymlrNlaHzIY?t=929).
-2. Создайте два пустых публичных репозитория в любом своём проекте: vector-role и lighthouse-role.
-3. Добавьте публичную часть своего ключа к своему профилю на GitHub.
+1. Репозиторий `Vector`
+
+[Vector](https://github.com/littlelucidlynx/vector-role.git)
+
+2. Репозиторий `Lighthouse`
+
+[Lighthouse](https://github.com/littlelucidlynx/lighthouse-role.git)
+
+3. Публичные части ключей для доступа к профилю на GitHub добавлены
+
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/08-ansible-04-role/Screen/Image000.png)
 
 ## Основная часть
 
-Ваша цель — разбить ваш playbook на отдельные roles. 
+На время тестирования ролей расположу их локально и буду обращаться через `- role: '../vector-role'` и `- role: '../lighthouse-role'`
 
-Задача — сделать roles для ClickHouse, Vector и LightHouse и написать playbook для использования этих ролей. 
-
-Ожидаемый результат — существуют три ваших репозитория: два с roles и один с playbook.
+```yaml
+---
+- name: Install Clickhouse
+  hosts: clickhouse
+  roles:
+    - role: clickhouse
+- name: Install Vector
+  hosts: vector
+  roles:
+    - role: '../vector-role'
+- name: Install lighthouse
+  hosts: lighthouse
+  roles:
+    - role: '../lighthouse-role'
+```
 
 **Что нужно сделать**
 
-1. Создайте в старой версии playbook файл `requirements.yml` и заполните его содержимым:
+1. Содержимое `requirements.yml` после тестирования ролей и пуша в github:
 
-   ```yaml
-   ---
-     - src: git@github.com:AlexeySetevoi/ansible-clickhouse.git
-       scm: git
-       version: "1.13"
-       name: clickhouse 
-   ```
-
-2. При помощи `ansible-galaxy` скачайте себе эту роль.
-3. Создайте новый каталог с ролью при помощи `ansible-galaxy role init vector-role`.
-4. На основе tasks из старого playbook заполните новую role. Разнесите переменные между `vars` и `default`. 
-5. Перенести нужные шаблоны конфигов в `templates`.
-6. Опишите в `README.md` обе роли и их параметры. Пример качественной документации ansible role [по ссылке](https://github.com/cloudalchemy/ansible-prometheus).
-7. Повторите шаги 3–6 для LightHouse. Помните, что одна роль должна настраивать один продукт.
-8. Выложите все roles в репозитории. Проставьте теги, используя семантическую нумерацию. Добавьте roles в `requirements.yml` в playbook.
-9. Переработайте playbook на использование roles. Не забудьте про зависимости LightHouse и возможности совмещения `roles` с `tasks`.
-10. Выложите playbook в репозиторий.
-11. В ответе дайте ссылки на оба репозитория с roles и одну ссылку на репозиторий с playbook.
-
+```yaml
 ---
+  - name: clickhouse
+    src: git@github.com:AlexeySetevoi/ansible-clickhouse.git
+    scm: git
+    version:  "1.13"
 
-### Как оформить решение задания
+  - name: vector-role
+    src: git@github.com:littlelucidlynx/vector-role.git
+    scm: git
+    version: "1.0.0"
 
-Выполненное домашнее задание пришлите в виде ссылки на .md-файл в вашем репозитории.
+  - name: lighthouse-role
+    src: git@github.com:littlelucidlynx/lighthouse-role.git
+    scm: git
+    version: "1.0.0"
 
+```
+
+2. Скачивание всех ролей. Роль `clickhouse` уже присутствует, принудительно скачивать не стал 
+
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/08-ansible-04-role/Screen/Image001.png)
+
+3. Переменные разделены на `defaults\main.yml` и `vars\main.yml`. Переменные, которые отданы пользователям на изменение, расположил в `defaults\main.yml`
+4. Нужные шаблоны конфигов расположил в `templates`
+5. По образу и подобию роли `clickhouse` разделил таски на субдиректории `install` и `configure`. В `tasks\main.yml` идет обращение к ним через вложенные таски `- ansible.builtin.include_tasks`. Сделано это, чтобы не смешивать роли и таски
+6. Итоговый `playbook`, переработанный под роли. В плейбуке только роли, все таски перенесены внутрь ролей
+
+```yaml
 ---
+- name: Install Clickhouse
+  hosts: clickhouse
+  roles:
+    - role: clickhouse
+- name: Install Vector
+  hosts: vector
+  roles:
+    - role: vector-role
+- name: Install lighthouse
+  hosts: lighthouse
+  roles:
+    - role: lighthouse-role
+
+```
+
+7. Инфраструктура через terraform
+
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/08-ansible-04-role/Screen/Image004.png)
+
+8. Выполнение playbook
+
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/08-ansible-04-role/Screen/Image002.png)
+
+Lighthouse
+
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/08-ansible-04-role/Screen/Image003.png)

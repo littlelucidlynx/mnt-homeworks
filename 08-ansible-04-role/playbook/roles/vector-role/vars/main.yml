@@ -1,0 +1,17 @@
+---
+vector_config:
+  sources:
+    demo_logs:
+      type: demo_logs
+      format: syslog
+  sinks:
+    to_clickhouse:
+      type: clickhouse
+      inputs:
+        - demo_logs
+      database: "clickhouse_db_name"
+      endpoint: http://{{ hostvars['clickhouse-01'].ansible_host }}:8123
+      table: "clickhouse_table_name"
+      compression: gzip
+      healthcheck: false
+      skip_unknown_fields: true

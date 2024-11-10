@@ -1,0 +1,7 @@
+---
+- name: Lighthouse | Install nginx
+  become: true
+  ansible.builtin.yum:
+      name: nginx
+      state: present
+  notify: Start-nginx

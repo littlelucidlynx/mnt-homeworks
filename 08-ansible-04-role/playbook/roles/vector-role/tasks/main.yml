@@ -1,0 +1,4 @@
+---
+- ansible.builtin.include_tasks: install/vector.yml
+- ansible.builtin.include_tasks: configure/vector.yml
+- ansible.builtin.include_tasks: configure/systemd.yml

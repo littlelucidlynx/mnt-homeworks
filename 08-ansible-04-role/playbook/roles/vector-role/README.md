@@ -1,16 +1,18 @@
-lighthouse-role
+vector-role
 =========
 
-This role can install Lighthouse on EL
+This role can install Vector on EL
 
 Role Variables
 --------------
 
 | vars | description |
 |---|---|
-| lighthouse_location_dir | directory to install lighthouse |
-| nginx_user_name | username to use in nginx |
-
+| vector_version | version of vector to install |
+| vector_url | url to download vector |
+| vector_config_dir | directory with vector config |
+| clickhouse_db_name | database name on clickhouse service |
+| clickhouse_table_name | table name on clickhouse service |
 
 Example Playbook
 ----------------
@@ -19,7 +21,7 @@ Including an example of how to use your role (for instance, with variables passe
 
     - hosts: servers
       roles:
-         - { role: lighthouse-role }
+         - { role: vector-role }
 
 License
 -------

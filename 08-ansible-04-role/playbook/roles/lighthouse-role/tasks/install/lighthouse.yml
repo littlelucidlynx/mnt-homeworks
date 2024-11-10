@@ -1,0 +1,6 @@
+---
+- name: Lighthouse | Clone lighthouse from git
+  ansible.builtin.git:
+    repo: "{{ lighthouse_url }}"
+    dest: "{{ lighthouse_location_dir }}"
+    version: master

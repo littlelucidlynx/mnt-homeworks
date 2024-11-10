@@ -6,8 +6,8 @@
 - name: Install Vector
   hosts: vector
   roles:
-    - role: '../vector-role'
+    - role: vector-role
 - name: Install lighthouse
   hosts: lighthouse
   roles:
-    - role: '../lighthouse-role'
+    - role: lighthouse-role

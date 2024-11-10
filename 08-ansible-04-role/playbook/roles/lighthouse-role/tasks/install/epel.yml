@@ -1,0 +1,6 @@
+---
+- name: Lighthouse | Install epel-release
+  become: true
+  ansible.builtin.yum:
+    name: epel-release
+    state: present
