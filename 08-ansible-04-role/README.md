@@ -2,13 +2,9 @@
 
 ## Подготовка к выполнению
 
-1. Репозиторий `Vector`
+1. Репозиторий [Vector](https://github.com/littlelucidlynx/vector-role.git)
 
-[Vector](https://github.com/littlelucidlynx/vector-role.git)
-
-2. Репозиторий `Lighthouse`
-
-[Lighthouse](https://github.com/littlelucidlynx/lighthouse-role.git)
+2. Репозиторий [Lighthouse](https://github.com/littlelucidlynx/lighthouse-role.git)
 
 3. Публичные части ключей для доступа к профилю на GitHub добавлены
 
@@ -63,7 +59,31 @@
 
 3. Переменные разделены на `defaults\main.yml` и `vars\main.yml`. Переменные, которые отданы пользователям на изменение, расположил в `defaults\main.yml`
 4. Нужные шаблоны конфигов расположил в `templates`
-5. По образу и подобию роли `clickhouse` разделил таски на субдиректории `install` и `configure`. В `tasks\main.yml` идет обращение к ним через вложенные таски `- ansible.builtin.include_tasks`. Сделано это, чтобы не смешивать роли и таски
+5. По образу и подобию роли `clickhouse` разделил таски на субдиректории `install` и `configure`. В `tasks\main.yml` идет обращение к ним через вложенные таски `- ansible.builtin.include_tasks`. Handlers перенесены в `handlers\main.yml`. Сделано это, чтобы не смешивать роли, таски и хендлеры
+
+```yaml
+.
+├── configure
+│   ├── lighthouse.yml
+│   └── nginx.yml
+├── install
+│   ├── epel.yml
+│   ├── git.yml
+│   ├── lighthouse.yml
+│   └── nginx.yml
+└── main.yml
+```
+
+```yaml
+.
+├── configure
+│   ├── systemd.yml
+│   └── vector.yml
+├── install
+│   └── vector.yml
+└── main.yml
+```
+
 6. Итоговый `playbook`, переработанный под роли. В плейбуке только роли, все таски перенесены внутрь ролей
 
 ```yaml
