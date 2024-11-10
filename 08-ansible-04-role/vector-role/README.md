@@ -10,6 +10,9 @@ Role Variables
 |---|---|
 | vector_version | version of vector to install |
 | vector_url | url to download vector |
+| vector_config_dir | directory with vector config |
+| clickhouse_db_name | database name on clickhouse service |
+| clickhouse_table_name | table name on clickhouse service |
 
 Example Playbook
 ----------------
