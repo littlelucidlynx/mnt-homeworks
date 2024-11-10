@@ -1,0 +1,16 @@
+---
+- name: Vector | Change systemd unit
+  become: true
+  ansible.builtin.template:
+    src: vector.service.j2
+    dest: /usr/lib/systemd/system/vector.service
+    mode: "0644"
+    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_user_gid }}"
+    backup: true
+  notify: Start Vector Service
+- name: Pause for 10 seconds to create vector service
+  ansible.builtin.pause:
+    seconds: 10
+- name: Flush handlers to restart vector
+  ansible.builtin.meta: flush_handlers

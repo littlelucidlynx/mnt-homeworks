@@ -3,5 +3,5 @@
   become: true
   ansible.builtin.systemd:
     name: vector
-    state: started
+    state: restarted
     daemon_reload: true

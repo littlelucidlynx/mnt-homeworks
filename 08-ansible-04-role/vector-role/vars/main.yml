@@ -1,20 +1,17 @@
 ---
 vector_config:
   sources:
-    our_log:
-      type: file
-      ignore_older_secs: 600
-      include:
-        - /var/log/myapp/*.log
-      read_from: beginning
+    demo_logs:
+      type: demo_logs
+      format: syslog
   sinks:
     to_clickhouse:
       type: clickhouse
       inputs:
-        - our_log
-      database: custom
+        - demo_logs
+      database: "clickhouse_db_name"
       endpoint: http://{{ hostvars['clickhouse-01'].ansible_host }}:8123
-      table: my_table
+      table: "clickhouse_table_name"
       compression: gzip
       healthcheck: false
       skip_unknown_fields: true

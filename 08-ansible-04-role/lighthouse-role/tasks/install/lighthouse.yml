@@ -1,6 +1,6 @@
 ---
-- name: Lighthouse | Install lighthouse from git
+- name: Lighthouse | Clone lighthouse from git
   ansible.builtin.git:
-    repo: "{{ lighthouse_vcs }}"
-    version: master
+    repo: "{{ lighthouse_url }}"
     dest: "{{ lighthouse_location_dir }}"
+    version: master
