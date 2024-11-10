@@ -59,7 +59,7 @@
 
 3. Переменные разделены на `defaults\main.yml` и `vars\main.yml`. Переменные, которые отданы пользователям на изменение, расположил в `defaults\main.yml`
 4. Нужные шаблоны конфигов расположил в `templates`
-5. По образу и подобию роли `clickhouse` разделил таски на субдиректории `install` и `configure`. В `tasks\main.yml` идет обращение к ним через вложенные таски `- ansible.builtin.include_tasks`. Handlers перенесены в `handlers\main.yml`. Сделано это, чтобы не смешивать роли, таски и хендлеры
+5. По образу и подобию роли `clickhouse` разделил таски на субдиректории `install` и `configure`
 
 ```yaml
 .
@@ -82,6 +82,28 @@
 ├── install
 │   └── vector.yml
 └── main.yml
+```
+
+В `tasks\main.yml` идет обращение к ним через вложенные таски `- ansible.builtin.include_tasks`. Handlers перенесены в `handlers\main.yml`. Сделано это, чтобы не смешивать роли, таски и хендлеры
+
+```yaml
+---
+- ansible.builtin.include_tasks: install/git.yml
+- ansible.builtin.include_tasks: install/epel.yml
+- ansible.builtin.include_tasks: install/nginx.yml
+- ansible.builtin.include_tasks: configure/nginx.yml
+
+- ansible.builtin.include_tasks: install/lighthouse.yml
+- ansible.builtin.include_tasks: configure/lighthouse.yml
+
+```
+
+```yaml
+---
+- ansible.builtin.include_tasks: install/vector.yml
+- ansible.builtin.include_tasks: configure/vector.yml
+- ansible.builtin.include_tasks: configure/systemd.yml
+
 ```
 
 6. Итоговый `playbook`, переработанный под роли. В плейбуке только роли, все таски перенесены внутрь ролей
@@ -110,7 +132,5 @@
 8. Выполнение playbook
 
 ![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/08-ansible-04-role/Screen/Image002.png)
-
-Lighthouse
 
 ![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/08-ansible-04-role/Screen/Image003.png)
