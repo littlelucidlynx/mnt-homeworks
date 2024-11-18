@@ -1,0 +1,82 @@
+services:
+
+#jira
+  jira:
+    depends_on:
+      db:
+        condition: service_healthy
+    container_name: jira
+    image: atlassian/jira-software
+    volumes:
+      - type: volume
+        source: jira_vol
+        target: /var/atlassian/application-data/jira
+    ports:
+    - "8080:8080"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "500k"
+        max-file: "50"
+    restart: on-failure
+
+  db:
+    container_name: db
+    image: postgres:9.5-alpine
+    volumes:
+      - type: volume
+        source: pgsql_vol
+        target: /var/lib/postgresql/data
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_ENCODING=${POSTGRES_ENCODING}
+      - POSTGRES_COLLATE=${POSTGRES_COLLATE}
+      - POSTGRES_COLLATE_TYPE=${POSTGRES_COLLATE_TYPE}
+    healthcheck:
+      test: ["CMD-SHELL", "sh -c 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}'"]
+      interval: 5s
+      retries: 120
+      start_period: 30s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "500k"
+        max-file: "50"
+    restart: on-failure
+
+#db
+#  db:
+#    container_name: db
+#    image: mysql:8.4.0
+#    volumes:
+#      - type: volume
+#        source: mysql_vol
+#        target: /var/lib/postgresql/data
+#    env_file:
+#      - .env
+#    environment:
+#      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+#      - MYSQL_DATABASE=${MYSQL_DATABASE}
+#      - MYSQL_USER=${MYSQL_USER}
+#      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+#      - MYSQL_ROOT_HOST="%"
+#    healthcheck:
+#      test: ["CMD", 'mysqladmin', 'ping', '-h', 'localhost', '-u', 'root', '-p$$MYSQL_ROOT_PASSWORD']
+#      interval: 5s
+#      retries: 120
+#      start_period: 30s
+#    logging:
+#      driver: "json-file"
+#      options:
+#        max-size: "500k"
+#        max-file: "50"
+#    restart: on-failure
+    
+volumes:
+  jira_vol:
+#  mysql_vol:
+  pgsql_vol:

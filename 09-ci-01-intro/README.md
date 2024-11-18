@@ -2,14 +2,18 @@
 
 ## Подготовка к выполнению
 
-1. Получить бесплатную версию Jira - https://www.atlassian.com/ru/software/jira/work-management/free (скопируйте ссылку в адресную строку). Вы можете воспользоваться любым(в том числе бесплатным vpn сервисом) если сайт у вас недоступен. Кроме того вы можете скачать [docker образ](https://hub.docker.com/r/atlassian/jira-software/#) и запустить на своем хосте self-managed версию jira.
-2. Настроить её для своей команды разработки.
-3. Создать доски Kanban и Scrum.
-4. [Дополнительные инструкции от разработчика Jira](https://support.atlassian.com/jira-cloud-administration/docs/import-and-export-issue-workflows/).
+1. Настроена self-hosted jira из контейнеров с jira и postgresql. Предложенный образ не умеет поднимать собственную внутреннюю базу и не дружит с mysql даже после установки драйвера. Ну и ладно, сделаю на postgresql.
+2. Получен триальный доступ к jira.
+3. Создан проект example-netology-01 и доски Kanban EX01 и Scrum EX1.
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-01-intro/Screen/Image000.png)
 
 ## Основная часть
 
 Необходимо создать собственные workflow для двух типов задач: bug и остальные типы задач. Задачи типа bug должны проходить жизненный цикл:
+
+[workflow для bug](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-01-intro/bug.xml)
+
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-01-intro/Screen/Image003.png)
 
 1. Open -> On reproduce.
 2. On reproduce -> Open, Done reproduce.
@@ -19,7 +23,9 @@
 6. On test -> On fix, Done.
 7. Done -> Closed, Open.
 
-Остальные задачи должны проходить по упрощённому workflow:
+[workflow для other tasks](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-01-intro/other_tasks.xml)
+
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-01-intro/Screen/Image004.png)
 
 1. Open -> On develop.
 2. On develop -> Open, Done develop.
@@ -29,17 +35,7 @@
 
 **Что нужно сделать**
 
-1. Создайте задачу с типом bug, попытайтесь провести его по всему workflow до Done. 
-1. Создайте задачу с типом epic, к ней привяжите несколько задач с типом task, проведите их по всему workflow до Done. 
-1. При проведении обеих задач по статусам используйте kanban. 
-1. Верните задачи в статус Open.
-1. Перейдите в Scrum, запланируйте новый спринт, состоящий из задач эпика и одного бага, стартуйте спринт, проведите задачи до состояния Closed. Закройте спринт.
-2. Если всё отработалось в рамках ожидания — выгрузите схемы workflow для импорта в XML. Файлы с workflow и скриншоты workflow приложите к решению задания.
-
----
-
-### Как оформить решение задания
-
-Выполненное домашнее задание пришлите в виде ссылки на .md-файл в вашем репозитории.
-
----
+1. Панель Kanban после выполнения задач
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-01-intro/Screen/Image001.png)
+2. Отчет после закрытия спринта
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-01-intro/Screen/Image002.png)
