@@ -5,6 +5,7 @@
 1. Настроена self-hosted jira из контейнеров с jira и postgresql. Предложенный образ не умеет поднимать собственную внутреннюю базу и не дружит с mysql даже после установки драйвера. Ну и ладно, сделаю на postgresql.
 2. Получен триальный доступ к jira.
 3. Создан проект example-netology-01 и доски Kanban EX01 и Scrum EX1.
+
 ![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-01-intro/Screen/Image000.png)
 
 ## Основная часть
