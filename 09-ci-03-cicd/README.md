@@ -85,7 +85,7 @@ ExecStop=/bin/bash {{ nexus_directory_home }}/bin/nexus stop
 
 ![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-03-cicd/Screen/Nexus_repo_artifacts.png)
 
-2. Итоговый [maven-metadata.xml](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-03-cicd/maven_metadata.xml) для этого артефекта
+2. Итоговый [maven-metadata.xml](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-03-cicd/maven-metadata.xml) для этого артефекта
 
 ### Знакомство с Maven
 
@@ -101,7 +101,7 @@ ExecStop=/bin/bash {{ nexus_directory_home }}/bin/nexus stop
 
 1. Измененный файл `pom.xml` с блоком с зависимостями под артефакт **java** с версией **8_282**
 
-![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-03-cicd/Screen/Mvn_version.png)
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-03-cicd/Screen/Mvn_fix_pom.png)
 
 2. Запуск команды `mvn package` в директории с `pom.xml`, просмотр наличия артефакта в директории `~/.m2/repository/netology/java/8_282/`
 
