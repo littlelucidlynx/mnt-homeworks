@@ -2,66 +2,111 @@
 
 ## Подготовка к выполнению
 
-1. Создайте два VM в Yandex Cloud с параметрами: 2CPU 4RAM Centos7 (остальное по минимальным требованиям).
-2. Пропишите в [inventory](./infrastructure/inventory/cicd/hosts.yml) [playbook](./infrastructure/site.yml) созданные хосты.
-3. Добавьте в [files](./infrastructure/files/) файл со своим публичным ключом (id_rsa.pub). Если ключ называется иначе — найдите таску в плейбуке, которая использует id_rsa.pub имя, и исправьте на своё.
-4. Запустите playbook, ожидайте успешного завершения.
-5. Проверьте готовность SonarQube через [браузер](http://localhost:9000).
-6. Зайдите под admin\admin, поменяйте пароль на свой.
-7.  Проверьте готовность Nexus через [бразуер](http://localhost:8081).
-8. Подключитесь под admin\admin123, поменяйте пароль, сохраните анонимный доступ.
+0. Плотину нужно поднять. Рычагом. Я его дам. Канал нужно завалить. Камнем. Камень я не дам
+
+1. Создать ВМ в Yandex Cloud не сложно, но есть несколько но:
+
+- Текущая версия `ansible [core 2.17.6]` требует интерпретатор python версии 3.7 и выше (для некоторых модулей это критично);
+- Официальные репозитории centos7 и centos8 более недоступны. Можно добавить сторонние, но ситуацию это сильно не изменит;
+- Текущая версия `ansible [core 2.17.6]` не распознает контекст пакетных менеджеров yum (centos7) и dnf (centos8) даже с принудительным указанием `use_backend`;
+
+Желание немного поразбираться и облегчить другим работу взяло верх. Как же в итоге сделал я?
+
+- Поскольку изначальный playbook ориентирован на RHEL-based дистрибутив, то я взял актуальный **centos-stream-9-oslogin** (можно заменить на **almalinux-9**)
+- Переделал playbook с `ansible.builtin.yum` на `ansible.builtin.dnf` с добавлением `disable_gpg_check: true`
+- Убрал установку репозитория postgresql**11**. Вместо него будет использоваться postgresql**14**. Так же необходимо поправить пути установки конфигов с 11 на 14 версию
+- Заменил строки запуска и остановки `nexus`, иначе он не поднимется
+
+```yaml
+#ExecStart={{ nexus_directory_home }}/bin/nexus start
+#ExecStop={{ nexus_directory_home }}/bin/nexus stop
+ExecStart=/bin/bash {{ nexus_directory_home }}/bin/nexus start
+ExecStop=/bin/bash {{ nexus_directory_home }}/bin/nexus stop
+```
+- Inventory-файл `hosts.yml` переименовал в `hosts_old.yml`. Актуальный динамический inventory мне будет формировать terraform
+- Добавил создание группы безопасности шаблоном из предыдущих домашних заданий, дополнительно включив разрешение входящего трафика `TCP/IP 8081` и `TCP/IP 9000` с любых внешних хостов
+- Взял свежую версию `nexus 3.74.0-05`
+- Добавил в playbook отдельную таску на очистку локального файла `~/.ssh/known_hosts`
+- Добавил в проект на уровень infrastructure файл `ansible.cfg` для отключения проверки отпечатков ssh-ключей
+
+Стенд поднялся. В целом, не то чтобы сложно. Возможно, будущим студентам это облегчит выполнение домашней работы и позволит изучить сам инструментарий, а не решать проблемы совместимости
+
+2. Готовность SonarQube через браузер
+
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-03-cicd/Screen/SonarQube_start_page.png)
+
+3. Готовность Nexus через бразуер
+
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-03-cicd/Screen/Nexus_start_page.png)
+
+4. Nexus сам подсказал где взять дефолтный пароль для админа
+
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-03-cicd/Screen/Nexus_default_password.png)
+
+5. Сохранил анонимный доступ
+
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-03-cicd/Screen/Nexus_anon_access.png)
 
 ## Знакомоство с SonarQube
 
 ### Основная часть
 
-1. Создайте новый проект, название произвольное.
-2. Скачайте пакет sonar-scanner, который вам предлагает скачать SonarQube.
-3. Сделайте так, чтобы binary был доступен через вызов в shell (или поменяйте переменную PATH, или любой другой, удобный вам способ).
-4. Проверьте `sonar-scanner --version`.
-5. Запустите анализатор против кода из директории [example](./example) с дополнительным ключом `-Dsonar.coverage.exclusions=fail.py`.
-6. Посмотрите результат в интерфейсе.
-7. Исправьте ошибки, которые он выявил, включая warnings.
-8. Запустите анализатор повторно — проверьте, что QG пройдены успешно.
-9. Сделайте скриншот успешного прохождения анализа, приложите к решению ДЗ.
+1. Создан новый локальный проект `example-netology-01`, получен токен
+
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-03-cicd/Screen/SonarQube_create_project.png)
+
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-03-cicd/Screen/SonarQube_token.png)
+
+2. sonar-scanner установлен через brew
+
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-03-cicd/Screen/Sonar-scanner_version.png)
+
+3. Натравливание **sonar-scanner** на `./example` с дополнительным ключом
+
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-03-cicd/Screen/Sonar-scanner_run.png)
+
+4. Результаты в интерфейсе
+
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-03-cicd/Screen/SonarQube_1_check.png)
+
+5. Баги
+
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-03-cicd/Screen/SonarQube_bugs.png)
+
+6. Исправление, повторный анализ
+
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-03-cicd/Screen/SonarQube_2_check.png)
 
 ## Знакомство с Nexus
 
 ### Основная часть
 
-1. В репозиторий `maven-public` загрузите артефакт с GAV-параметрами:
+1. В репозиторий `maven-public` загружены два артефакта (один и тот же пустой файл с расширением **.tar.gz**)
 
- *    groupId: netology;
- *    artifactId: java;
- *    version: 8_282;
- *    classifier: distrib;
- *    type: tar.gz.
-   
-2. В него же загрузите такой же артефакт, но с version: 8_102.
-3. Проверьте, что все файлы загрузились успешно.
-4. В ответе пришлите файл `maven-metadata.xml` для этого артефекта.
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-03-cicd/Screen/Nexus_repo_artifacts.png)
+
+2. Итоговый [maven-metadata.xml](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-03-cicd/maven_metadata.xml) для этого артефекта
 
 ### Знакомство с Maven
 
 ### Подготовка к выполнению
 
-1. Скачайте дистрибутив с [maven](https://maven.apache.org/download.cgi).
-2. Разархивируйте, сделайте так, чтобы binary был доступен через вызов в shell (или поменяйте переменную PATH, или любой другой, удобный вам способ).
-3. Удалите из `apache-maven-<version>/conf/settings.xml` упоминание о правиле, отвергающем HTTP- соединение — раздел mirrors —> id: my-repository-http-unblocker.
-4. Проверьте `mvn --version`.
-5. Заберите директорию [mvn](./mvn) с pom.
+1. maven установлен через brew
+
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-03-cicd/Screen/Mvn_version.png)
+
+2. Из `/usr/local/Cellar/maven/3.9.9/libexec/conf/settings.xml` удалено упоминание блокировки http
 
 ### Основная часть
 
-1. Поменяйте в `pom.xml` блок с зависимостями под ваш артефакт из первого пункта задания для Nexus (java с версией 8_282).
-2. Запустите команду `mvn package` в директории с `pom.xml`, ожидайте успешного окончания.
-3. Проверьте директорию `~/.m2/repository/`, найдите ваш артефакт.
-4. В ответе пришлите исправленный файл `pom.xml`.
+1. Измененный файл `pom.xml` с блоком с зависимостями под артефакт **java** с версией **8_282**
 
----
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-03-cicd/Screen/Mvn_version.png)
 
-### Как оформить решение задания
+2. Запуск команды `mvn package` в директории с `pom.xml`, просмотр наличия артефакта в директории `~/.m2/repository/netology/java/8_282/`
 
-Выполненное домашнее задание пришлите в виде ссылки на .md-файл в вашем репозитории.
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-03-cicd/Screen/Mvn_artifact.png)
+
+3. Итоговый [pom.xml](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-03-cicd/mvn/pom.xml)
 
 ---
