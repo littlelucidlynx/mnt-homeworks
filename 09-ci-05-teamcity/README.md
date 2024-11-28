@@ -47,7 +47,7 @@
 
 ![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-05-teamcity/Screen/nexus_artifact_0.0.1.png)
 
-8. Мигрированный окончательный [build configuration](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-05-teamcity/NetologyTeamcity_Build.xml)
+8. Для [build configuration](https://github.com/littlelucidlynx/example-teamcity/tree/master/.teamcity/Test) создал вручную отдельный проект, привязал к нему VCS по ssh, а затем уже добавил проект из репозитория. Иначе github не принимал коммиты по https
 
 9. Отдельная ветка `feature/add_reply` в репозитории
 
@@ -61,7 +61,7 @@
 
 ![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-05-teamcity/Screen/welcomer_test.png)
 
-12. Сборки самостоятельно запускаются
+12. Сборки самостоятельно запускаются. На #5 добавлено формирование артефакта в teamcity, pom.xml исправлен не был. На #6 teamcity попытался записать имеющийся артефакт в nexus, но не смог. На ошибку можно не обращать внимания
 
 ![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-05-teamcity/Screen/all_builds.png)
 
