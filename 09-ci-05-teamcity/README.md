@@ -12,7 +12,7 @@
 
 3. fork [репозитория](https://github.com/littlelucidlynx/example-teamcity.git)
 
-4. Запуск слегка измененного playbook на хосте с nexus
+4. Запуск слегка измененного `playbook` на хосте с `nexus`
 
 ![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-05-teamcity/Screen/ansible_playbook.png)
 
@@ -23,37 +23,37 @@
 
 ![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-05-teamcity/Screen/project_creation.png)
 
-2. autodetect конфигурации - **Maven**
+2. autodetect конфигурации - `Maven`
 
-3. Первая сборка master
+3. Первая сборка `master`
 
 ![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-05-teamcity/Screen/1_build.png)
 
-4. Изменение условий сборки: если сборка по ветке `master`, то должен происходит `mvn clean deploy`, иначе `mvn clean test`
+4. Изменение условий сборки: если сборка по ветке `master`, то должен происходит `clean deploy`, иначе `clean test`
 
 ![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-05-teamcity/Screen/build_steps.png)
 
-5. Загрузка **settings.xml** в набор конфигураций maven
+5. Загрузка `settings.xml` в набор конфигураций `maven`
 
 ![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-05-teamcity/Screen/custom_settings.png)
 
-6. Измененный pom.xml версии 0.0.1
+6. Измененный `pom.xml` версии `0.0.1`
 
 ![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-05-teamcity/Screen/pom_xml_0.0.1.png)
 
-7. Запуск сборки по master, артефакт в nexus
+7. Запуск сборки по `master`, артефакт в `nexus`
 
 ![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-05-teamcity/Screen/2_build.png)
 
 ![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-05-teamcity/Screen/nexus_artifact_0.0.1.png)
 
-8. Мигрированный [build configuration](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-05-teamcity/NetologyTeamcity_Build)
+8. Мигрированный окончательный [build configuration](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-05-teamcity/NetologyTeamcity_Build.xml)
 
 9. Отдельная ветка `feature/add_reply` в репозитории
 
 ![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-05-teamcity/Screen/new_branch.png)
 
-10. Новый метод для класса Welcomer: метод должен возвращать произвольную реплику, содержащую слово `hunter`
+10. Новый метод для класса `Welcomer`: метод должен возвращать произвольную реплику, содержащую слово `hunter`
 
 ![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-05-teamcity/Screen/welcomer.png)
 
@@ -67,7 +67,7 @@
 
 13. Сборка с тестовой ветки без деплоя
 
-![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-05-teamcity/Screen/build_nomaster_steps.png)
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-05-teamcity/Screen/build_nomaster_log.png)
 
 14. Артефакта нет
 
@@ -79,9 +79,9 @@
 
 16. Повторная сборка мастера с деплоем
 
-![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-05-teamcity/Screen/build_master_steps.png)
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-05-teamcity/Screen/build_master_log.png)
 
-17. Артефакты в teamcity и nexus
+17. Артефакты в `teamcity` и `nexus`
 
 ![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-05-teamcity/Screen/build_master_artifacts.png)
 
