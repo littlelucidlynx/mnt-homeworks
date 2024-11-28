@@ -46,7 +46,7 @@ variable "family_os" {
 #  default = "centos-7"
   default = "centos-stream-9-oslogin"
 #  default = "almalinux-9"
-  description = "falimly os linux"
+  description = "family os linux"
 }
 
 variable "standart_platform_id" {

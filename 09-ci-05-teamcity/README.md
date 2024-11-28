@@ -2,39 +2,87 @@
 
 ## Подготовка к выполнению
 
-1. В Yandex Cloud создайте новый инстанс (4CPU4RAM) на основе образа `jetbrains/teamcity-server`.
-2. Дождитесь запуска teamcity, выполните первоначальную настройку.
-3. Создайте ещё один инстанс (2CPU4RAM) на основе образа `jetbrains/teamcity-agent`. Пропишите к нему переменную окружения `SERVER_URL: "http://<teamcity_url>:8111"`.
-4. Авторизуйте агент.
-5. Сделайте fork [репозитория](https://github.com/aragastmatb/example-teamcity).
-6. Создайте VM (2CPU4RAM) и запустите [playbook](./infrastructure).
+1. Инфраструктура в Yandex Cloud
+
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-05-teamcity/Screen/yc_compute_instance_list.png)
+
+2. Авторизация агента
+
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-05-teamcity/Screen/authorize_agent.png)
+
+3. fork [репозитория](https://github.com/littlelucidlynx/example-teamcity.git)
+
+4. Запуск слегка измененного playbook на хосте с nexus
+
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-05-teamcity/Screen/ansible_playbook.png)
+
 
 ## Основная часть
 
-1. Создайте новый проект в teamcity на основе fork.
-2. Сделайте autodetect конфигурации.
-3. Сохраните необходимые шаги, запустите первую сборку master.
-4. Поменяйте условия сборки: если сборка по ветке `master`, то должен происходит `mvn clean deploy`, иначе `mvn clean test`.
-5. Для deploy будет необходимо загрузить [settings.xml](./teamcity/settings.xml) в набор конфигураций maven у teamcity, предварительно записав туда креды для подключения к nexus.
-6. В pom.xml необходимо поменять ссылки на репозиторий и nexus.
-7. Запустите сборку по master, убедитесь, что всё прошло успешно и артефакт появился в nexus.
-8. Мигрируйте `build configuration` в репозиторий.
-9. Создайте отдельную ветку `feature/add_reply` в репозитории.
-10. Напишите новый метод для класса Welcomer: метод должен возвращать произвольную реплику, содержащую слово `hunter`.
-11. Дополните тест для нового метода на поиск слова `hunter` в новой реплике.
-12. Сделайте push всех изменений в новую ветку репозитория.
-13. Убедитесь, что сборка самостоятельно запустилась, тесты прошли успешно.
-14. Внесите изменения из произвольной ветки `feature/add_reply` в `master` через `Merge`.
-15. Убедитесь, что нет собранного артефакта в сборке по ветке `master`.
-16. Настройте конфигурацию так, чтобы она собирала `.jar` в артефакты сборки.
-17. Проведите повторную сборку мастера, убедитесь, что сбора прошла успешно и артефакты собраны.
-18. Проверьте, что конфигурация в репозитории содержит все настройки конфигурации из teamcity.
-19. В ответе пришлите ссылку на репозиторий.
+1. Новый проект на основе fork [репозитория](https://github.com/littlelucidlynx/example-teamcity.git)
 
----
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-05-teamcity/Screen/project_creation.png)
 
-### Как оформить решение задания
+2. autodetect конфигурации - **Maven**
 
-Выполненное домашнее задание пришлите в виде ссылки на .md-файл в вашем репозитории.
+3. Первая сборка master
 
----
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-05-teamcity/Screen/1_build.png)
+
+4. Изменение условий сборки: если сборка по ветке `master`, то должен происходит `mvn clean deploy`, иначе `mvn clean test`
+
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-05-teamcity/Screen/build_steps.png)
+
+5. Загрузка **settings.xml** в набор конфигураций maven
+
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-05-teamcity/Screen/custom_settings.png)
+
+6. Измененный pom.xml версии 0.0.1
+
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-05-teamcity/Screen/pom_xml_0.0.1.png)
+
+7. Запуск сборки по master, артефакт в nexus
+
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-05-teamcity/Screen/2_build.png)
+
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-05-teamcity/Screen/nexus_artifact_0.0.1.png)
+
+8. Мигрированный [build configuration](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-05-teamcity/NetologyTeamcity_Build)
+
+9. Отдельная ветка `feature/add_reply` в репозитории
+
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-05-teamcity/Screen/new_branch.png)
+
+10. Новый метод для класса Welcomer: метод должен возвращать произвольную реплику, содержащую слово `hunter`
+
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-05-teamcity/Screen/welcomer.png)
+
+11. Дополнительный тест для нового метода на поиск слова `hunter`
+
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-05-teamcity/Screen/welcomer_test.png)
+
+12. Сборки самостоятельно запускаются
+
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-05-teamcity/Screen/all_builds.png)
+
+13. Сборка с тестовой ветки без деплоя
+
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-05-teamcity/Screen/build_nomaster_steps.png)
+
+14. Артефакта нет
+
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-05-teamcity/Screen/build_nomaster_artifacts.png)
+
+15. Конфигурация для сборки `.jar` в артефакты при условии успешного завершения билда
+
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-05-teamcity/Screen/jar_artifacts.png)
+
+16. Повторная сборка мастера с деплоем
+
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-05-teamcity/Screen/build_master_steps.png)
+
+17. Артефакты в teamcity и nexus
+
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-05-teamcity/Screen/build_master_artifacts.png)
+
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-05-teamcity/Screen/nexus_artifacts.png)

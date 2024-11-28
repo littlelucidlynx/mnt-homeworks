@@ -4,7 +4,7 @@
   tasks:
     - name: Clear local known_hosts
       ansible.builtin.file:
-        path: ~/.ssh/config
+        path: ~/.ssh/known_hosts
         state: absent
 - name: Get OpenJDK installed
   hosts: sonarqube
