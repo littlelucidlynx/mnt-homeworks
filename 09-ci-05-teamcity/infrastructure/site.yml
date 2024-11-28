@@ -1,4 +1,11 @@
 ---
+- name: Prepare for ssh connection
+  hosts: local
+  tasks:
+    - name: Clear local known_hosts
+      ansible.builtin.file:
+        path: ~/.ssh/authorized_keys
+        state: absent
 - name: Get Nexus installed
   hosts: nexus
   pre_tasks:
