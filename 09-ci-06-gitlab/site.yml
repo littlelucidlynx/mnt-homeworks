@@ -1,0 +1,48 @@
+---
+- name: Prepare for ssh connection
+  hosts: local
+  tasks:
+    - name: Clear local known_hosts
+      ansible.builtin.file:
+        path: ~/.ssh/authorized_keys
+        state: absent
+- name: Make gitlab runner
+  hosts: runner
+  tasks:
+    - name: Install curl
+      become: true
+      apt:
+        name: curl
+        state: present
+    - name: Check curl
+      become: true
+      shell: whereis curl
+    - name: Get runner repo
+      become_user: eurus_cloud
+      shell: curl -L "https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh" | sudo bash
+    - name: Add the pinning configuration file
+      become: true
+      become_user: eurus_cloud
+      shell: |
+        cat <<EOF | sudo tee /etc/apt/preferences.d/pin-gitlab-runner.pref
+        Explanation: Prefer GitLab provided packages over the Debian native ones
+        Package: gitlab-runner
+        Pin: origin packages.gitlab.com
+        Pin-Priority: 1001
+        EOF
+    - name: Install docker requirememnts
+      become: true
+      apt:
+        name:
+          - ca-certificates
+          - gnupg
+        update_cache: true
+        state: present
+    - name: Install docker
+      become: true
+      shell: curl -sSL https://get.docker.com/ | sh
+    - name: Install runner
+      become: true
+      apt: 
+        name: gitlab-runner
+        state: present
