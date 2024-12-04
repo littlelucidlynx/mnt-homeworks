@@ -34,4 +34,4 @@
 
 3. Если нет бюджета на систему сбора логов, а данные нужны - можно использовать облачные версии перехватчиков ошибок вроде `Sentry` и `Glitchtip`
 
-3. В формуле `summ_2xx_requests/summ_all_requests` учитывается только отношение кодов ответов `2xx (Success)` к общему числу кодов ответов, без учета кодов `1xx (Informational)` и `3xx (Redirection)`. Вариант корректной формулы: `(summ_1xx_requests)+(summ_2xx_requests)+(summ_3xx_requests)/summ_all_requests`
+4. В формуле `summ_2xx_requests/summ_all_requests` учитывается только отношение кодов ответов `2xx (Success)` к общему числу кодов ответов, без учета кодов `1xx (Informational)` и `3xx (Redirection)`. Вариант корректной формулы: `(summ_1xx_requests)+(summ_2xx_requests)+(summ_3xx_requests)/summ_all_requests`
