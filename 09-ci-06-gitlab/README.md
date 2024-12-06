@@ -6,10 +6,6 @@
 
 ![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/09-ci-06-gitlab/Screen/yc.compute.instance.png)
 
-4. Создайте свой новый проект.
-5. Создайте новый репозиторий в GitLab, наполните его [файлами](./repository).
-6. Проект должен быть публичным, остальные настройки по желанию.
-
 ## Основная часть
 
 ### DevOps
