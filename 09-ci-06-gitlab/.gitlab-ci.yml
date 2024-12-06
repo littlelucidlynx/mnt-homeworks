@@ -1,0 +1,27 @@
+stages:
+  - build
+  - deploy
+
+image: docker:cli
+
+services:
+  - docker:20.10.5-dind
+
+variables:
+  IMAGE_NAME: "hello:gitlab-$CI_COMMIT_SHORT_SHA"  
+
+builder:
+  stage: build
+  script:
+    - docker build -t $IMAGE_NAME .
+  except:
+    - main
+
+deployer:
+  stage: deploy
+  script:
+    - echo "$CI_REGISTRY_PASSWORD" | docker login $CI_REGISTRY --username $CI_REGISTRY_USER --password-stdin
+    - docker build -t $CI_REGISTRY/$IMAGE_NAME .
+    - docker push $CI_REGISTRY/$IMAGE_NAME
+  only:
+    - main
