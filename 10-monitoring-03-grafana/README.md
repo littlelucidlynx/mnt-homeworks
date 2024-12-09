@@ -34,13 +34,13 @@ node_filesystem_avail_bytes{device="/dev/root", fstype="erofs", instance="nodeex
 
 Создам канал оповещения `telegram`. Делал подобное в zabbix - ничего сложного. Нужно создать бота? добавить его в чат и внести ID в grafana. У панелей настроены алерты - появились сердечки
 
-![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/10-monitoring-03-grafana/Screen/grafana.dashboard.png)
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/10-monitoring-03-grafana/Screen/grafana.dashboard.alerts.png)
 
 Срабатывающие уведомления отправляются в чат через бота
 
-![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/10-monitoring-03-grafana/Screen/grafana.dashboard.alerts.png)
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/10-monitoring-03-grafana/Screen/telegram.alerts.png)
 
-В заббиксе как-то все это очевиднее. Там каналу оповещения сопоставляется триггер, который срабатывает независимо от наличия дашбордов
+Оказывается, не на всех типах графиков можно настроить алерты. В заббиксе как-то все очевиднее. Там каналу оповещения сопоставляется триггер, который срабатывает независимо от наличия дашбордов и типов графика
 
 ## Задание 4
 
