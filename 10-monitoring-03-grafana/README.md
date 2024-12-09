@@ -32,7 +32,7 @@ node_filesystem_avail_bytes{device="/dev/root", fstype="erofs", instance="nodeex
 
 ## Задание 3
 
-Создам канал оповещения `telegram`. Делал подобное в zabbix - ничего сложного. Нужно создать бота? добавить его в чат и внести ID в grafana. У панелей настроены алерты - появились сердечки
+Создам канал оповещения `telegram`. Делал подобное в zabbix - ничего сложного. Нужно создать бота, добавить его в чат и внести их ID в grafana. У панелей, там, где это доступно, настроены алерты - появились сердечки
 
 ![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/10-monitoring-03-grafana/Screen/grafana.dashboard.alerts.png)
 
