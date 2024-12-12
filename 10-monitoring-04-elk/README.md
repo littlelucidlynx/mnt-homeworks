@@ -15,26 +15,29 @@
 
 ## Задание 1
 
-- скриншот `docker ps` через 5 минут после старта всех контейнеров (их должно быть 5);
+- скриншот `docker ps`
 
 ![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/10-monitoring-04-elk/Screen/docker.containers.png)
 
-- скриншот интерфейса kibana;
+- скриншот интерфейса `kibana`
 
 ![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/10-monitoring-04-elk/Screen/kibana.png)
 
 ## Задание 2
 
-Перейдите в меню [создания index-patterns в kibana](http://localhost:5601/app/management/kibana/indexPatterns/create) и создайте несколько index-patterns из имеющихся
+data view: `log`
+index-pattern: `logstash-*`
 
 ![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/10-monitoring-04-elk/Screen/index.pattern.png)
 
-Перейдите в меню просмотра логов в kibana (Discover) и самостоятельно изучите, как отображаются логи и как производить поиск по логам.
+Просмотр логов
 
 ![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/10-monitoring-04-elk/Screen/discover.png)
 
+Расширенный вид документа
+
 ![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/10-monitoring-04-elk/Screen/expand.png)
 
-Фильтрация по полю agent.id
+Фильтрация по полю `agent.id`
 
 ![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/10-monitoring-04-elk/Screen/agent.id.png)
