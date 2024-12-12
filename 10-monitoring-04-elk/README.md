@@ -43,6 +43,6 @@ index pattern: `logstash-*`
 
 ![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/10-monitoring-04-elk/Screen/agent.id.png)
 
-Фильтр по полю @message
+Фильтр по полю message
 
 ![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/10-monitoring-04-elk/Screen/sort.by.message.png)
