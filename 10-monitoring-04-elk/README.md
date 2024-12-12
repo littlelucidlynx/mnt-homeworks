@@ -26,11 +26,12 @@
 ## Задание 2
 
 data view: `log`
-index-pattern: `logstash-*`
+
+index pattern: `logstash-*`
 
 ![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/10-monitoring-04-elk/Screen/index.pattern.png)
 
-Просмотр логов
+Просмотр логов по индекс-паттерну за 120 минут
 
 ![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/10-monitoring-04-elk/Screen/discover.png)
 
@@ -38,6 +39,10 @@ index-pattern: `logstash-*`
 
 ![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/10-monitoring-04-elk/Screen/expand.png)
 
-Фильтрация по полю `agent.id`
+Выбор поля `agent.id` для отображения
 
 ![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/10-monitoring-04-elk/Screen/agent.id.png)
+
+Фильтр по полю @message
+
+![Image alt](https://github.com/littlelucidlynx/mnt-homeworks/blob/MNT-video/10-monitoring-04-elk/Screen/sort.by.message.png)
